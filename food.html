@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Hub Menu</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #ff5722;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .food {
+            background-color: white;
+            width: 320px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        .food h2 {
+            color: #ff5722;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        button {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e64a19;
+        }
+
+        .back {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>RUPENDRA Food Delivery App</h1>
+    </div>
+
+    <div class="container">
+
+        <h2>Food Hub Menu</h2>
+
+        <div class="food">
+            <h2>Veg Pizza</h2>
+            <p>Delicious Veg Pizza</p>
+            <p class="price">Rs. 200</p>
+
+            <button onclick="window.location.href='order.html?foodId=3'">
+                Order Now
+            </button>
+        </div>
+
+        <div class="food">
+            <h2>Burger</h2>
+            <p>Fresh and Tasty Burger</p>
+            <p class="price">Rs. 150</p>
+
+            <button onclick="window.location.href='order.html?foodId=4'">
+                Order Now
+            </button>
+        </div>
+
+        <div class="back">
+            <button onclick="window.location.href='restaurants.html'">
+                Back to Restaurants
+            </button>
+        </div>
+
+    </div>
+
+</body>
+</html>
