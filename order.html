@@ -18,12 +18,9 @@
             text-align: center;
         }
 
-        .header h1 {
-            margin: 0;
-        }
-
         .container {
             width: 400px;
+            max-width: 85%;
             margin: 40px auto;
             background-color: white;
             padding: 30px;
@@ -63,16 +60,8 @@
             cursor: pointer;
         }
 
-        button:hover {
-            background-color: #e64a19;
-        }
-
         .back {
             background-color: #555;
-        }
-
-        .back:hover {
-            background-color: #333;
         }
     </style>
 </head>
@@ -88,42 +77,105 @@
         <h2>Place Your Order</h2>
 
         <label>Food Name</label>
-        <input type="text" id="foodName" value="Chicken Biryani">
+        <input type="text" id="foodName" readonly>
 
-        <label>Price</label>
-        <input type="text" id="price" value="250">
+        <label>Price (Rs.)</label>
+        <input type="text" id="price" readonly>
 
         <label>Quantity</label>
-        <input type="number" id="quantity" value="1" min="1">
+        <input type="number" id="quantity"
+               value="1" min="1" oninput="updateTotal()">
+
+        <label>Total Price (Rs.)</label>
+        <input type="text" id="total" readonly>
 
         <label>Customer Name</label>
-        <input type="text" id="customerName" placeholder="Enter your name">
+        <input type="text" id="customerName"
+               placeholder="Enter your name">
 
         <label>Delivery Address</label>
-        <input type="text" id="address" placeholder="Enter delivery address">
+        <input type="text" id="address"
+               placeholder="Enter delivery address">
 
-        <button onclick="placeOrder()">
-            Place Order
-        </button>
+        <button onclick="placeOrder()">Place Order</button>
 
-        <button class="back" onclick="window.location.href='spicy-menu.html'">
+        <button class="back"
+                onclick="window.location.href='food.html'">
             Back to Menu
         </button>
 
     </div>
 
     <script>
+        let foods = {
+            "1": { name: "Chicken Biryani", price: 250 },
+            "2": { name: "Veg Biryani", price: 180 },
+            "3": { name: "Veg Pizza", price: 200 },
+            "4": { name: "Burger", price: 150 }
+        };
+
+        let params = new URLSearchParams(window.location.search);
+        let foodId = params.get("foodId");
+        let food = foods[foodId];
+
+        if (food) {
+            document.getElementById("foodName").value = food.name;
+            document.getElementById("price").value = food.price;
+        } else {
+            document.getElementById("foodName").value =
+                "Food not selected";
+            document.getElementById("price").value = 0;
+        }
+
+        updateTotal();
+
+        function updateTotal() {
+            let price = Number(
+                document.getElementById("price").value
+            );
+
+            let quantity = Number(
+                document.getElementById("quantity").value
+            );
+
+            document.getElementById("total").value =
+                quantity >= 1 && Number.isInteger(quantity)
+                ? price * quantity
+                : "Invalid quantity";
+        }
+
         function placeOrder() {
+            let customerName =
+                document.getElementById("customerName").value.trim();
 
-            let customerName = document.getElementById("customerName").value;
-            let address = document.getElementById("address").value;
+            let address =
+                document.getElementById("address").value.trim();
 
-            if (customerName === "" || address === "") {
-                alert("Please enter Customer Name and Delivery Address.");
+            let quantity =
+                Number(document.getElementById("quantity").value);
+
+            if (!food) {
+                alert("Please select a food item from the menu.");
                 return;
             }
 
-            alert("Order Placed Successfully!");
+            if (customerName === "" || address === "") {
+                alert("Please enter your name and delivery address.");
+                return;
+            }
+
+            if (!Number.isInteger(quantity) || quantity < 1) {
+                alert("Please enter a valid quantity.");
+                return;
+            }
+
+            alert(
+                "Order Placed Successfully!\n" +
+                "Food: " + food.name + "\n" +
+                "Price: Rs. " + food.price + "\n" +
+                "Quantity: " + quantity + "\n" +
+                "Total: Rs. " + (food.price * quantity)
+            );
         }
     </script>
 
